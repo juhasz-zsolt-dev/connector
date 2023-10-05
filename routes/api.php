@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\BillingoController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +14,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(["prefix" => 'billingo/v3'], function (){
+    Route::group(["prefix" => 'documents'], function (){
+        Route::post("/", [BillingoController::class, 'createDocument'])->name("billingo.documents.create");
+        Route::get("/", [BillingoController::class, 'getDocumentList'])->name("billingo.documents.list");
+        Route::get("/{id}", [BillingoController::class, 'getOneDocument'])->name("billingo.documents.one");
+        Route::get("/{id}/download", [BillingoController::class, 'downloadDocument'])->name("billingo.documents.one");
+    });
 });
