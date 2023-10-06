@@ -9,16 +9,16 @@ class BillingoConnector extends Connector
 {
     use AcceptsJson;
 
-    public function __construct(private string $apiKey){
+    public function __construct(private string $apiKey)
+    {
     }
+
     /**
      * The Base URL of the API
-     *
-     * @return string
      */
     public function resolveBaseUrl(): string
     {
-        return config("integrations.baseUrl.billingo");
+        return config('integrations.baseUrl.billingo');
     }
 
     /**

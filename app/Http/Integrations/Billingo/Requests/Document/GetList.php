@@ -1,42 +1,39 @@
 <?php
 
-namespace App\Http\Integrations\Billingo\Requests;
+namespace App\Http\Integrations\Billingo\Requests\Document;
 
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
-class GetDocumentList extends Request
+class GetList extends Request
 {
     public function __construct(
         protected int $page,
         protected int $per_page,
-        protected string|null $payment_method,
-        protected string|null $payment_status,
+        protected ?string $payment_method,
+        protected ?string $payment_status,
         protected string $start_date,
         protected string $end_date,
         protected int $start_number,
         protected int $end_number,
-        protected int|null $start_year,
-        protected int|null $end_year,
+        protected ?int $start_year,
+        protected ?int $end_year,
         protected string $type,
-        protected string|null $paid_start_date,
-        protected string|null $paid_end_date,
-        protected string|null $fulfillment_start_date,
-        protected string|null $fulfillment_end_date,
-        protected string|null $last_modified_date,
-    ){
+        protected ?string $paid_start_date,
+        protected ?string $paid_end_date,
+        protected ?string $fulfillment_start_date,
+        protected ?string $fulfillment_end_date,
+        protected ?string $last_modified_date,
+    ) {
     }
+
     /**
      * Define the HTTP method
-     *
-     * @var Method
      */
     protected Method $method = Method::GET;
 
     /**
      * Define the endpoint for the request
-     *
-     * @return string
      */
     public function resolveEndpoint(): string
     {

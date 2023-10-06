@@ -58,6 +58,13 @@ return [
             'ignore_exceptions' => false,
         ],
 
+        'billingo' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/billingo/billingo.log'),
+            'channels' => ['single'],
+            'ignore_exceptions' => false,
+        ],
+
         'single' => [
             'driver' => 'single',
             'path' => storage_path('logs/laravel.log'),
