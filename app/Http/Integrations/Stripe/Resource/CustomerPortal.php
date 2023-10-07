@@ -1,0 +1,68 @@
+<?php
+
+namespace App\Http\Integrations\Stripe\Resource;
+
+use App\Http\Integrations\Stripe\Requests\CustomerPortal\CreatePortalConfiguration;
+use App\Http\Integrations\Stripe\Requests\CustomerPortal\CreatePortalSession;
+use App\Http\Integrations\Stripe\Requests\CustomerPortal\ListPortalConfigurations;
+use App\Http\Integrations\Stripe\Requests\CustomerPortal\RetrievePortalConfiguration;
+use App\Http\Integrations\Stripe\Requests\CustomerPortal\UpdatePortalConfiguration;
+use App\Http\Integrations\Stripe\Resource;
+use Saloon\Http\Response;
+
+class CustomerPortal extends Resource
+{
+	/**
+	 * @param string $active Only return configurations that are active or inactive (e.g., pass `true` to only list active configurations).
+	 * @param string $endingBefore A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+	 * @param string $expand0 Specifies which fields in the response should be expanded.
+	 * @param string $expand1 Specifies which fields in the response should be expanded.
+	 * @param string $isDefault Only return the default or non-default configurations (e.g., pass `true` to only list the default configuration).
+	 * @param string $limit A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+	 * @param string $startingAfter A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+	 */
+	public function listPortalConfigurations(
+		?string $active,
+		?string $endingBefore,
+		?string $expand0,
+		?string $expand1,
+		?string $isDefault,
+		?string $limit,
+		?string $startingAfter,
+	): Response
+	{
+		return $this->connector->send(new ListPortalConfigurations($active, $endingBefore, $expand0, $expand1, $isDefault, $limit, $startingAfter));
+	}
+
+
+	public function createPortalConfiguration(): Response
+	{
+		return $this->connector->send(new CreatePortalConfiguration());
+	}
+
+
+	/**
+	 * @param string $configuration
+	 * @param string $expand0 Specifies which fields in the response should be expanded.
+	 * @param string $expand1 Specifies which fields in the response should be expanded.
+	 */
+	public function retrievePortalConfiguration(string $configuration, ?string $expand0, ?string $expand1): Response
+	{
+		return $this->connector->send(new RetrievePortalConfiguration($configuration, $expand0, $expand1));
+	}
+
+
+	/**
+	 * @param string $configuration
+	 */
+	public function updatePortalConfiguration(string $configuration): Response
+	{
+		return $this->connector->send(new UpdatePortalConfiguration($configuration));
+	}
+
+
+	public function createPortalSession(): Response
+	{
+		return $this->connector->send(new CreatePortalSession());
+	}
+}
