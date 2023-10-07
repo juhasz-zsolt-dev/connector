@@ -2,11 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Integrations\Billingo\Billingo;
 use App\Http\Integrations\Billingo\BillingoConnector;
 use App\Http\Integrations\Billingo\Requests\Document\Create;
+use App\Http\Integrations\Billingo\Requests\Document\CreateDocument;
 use App\Http\Integrations\Billingo\Requests\Document\Download;
+use App\Http\Integrations\Billingo\Requests\Document\DownloadDocument;
+use App\Http\Integrations\Billingo\Requests\Document\GetDocument;
 use App\Http\Integrations\Billingo\Requests\Document\GetList;
 use App\Http\Integrations\Billingo\Requests\Document\GetOne;
+use App\Http\Integrations\Billingo\Requests\Document\ListDocument;
+use App\Http\Integrations\Billingo\Requests\Partner\GetPartner;
+use App\Http\Integrations\Billingo\Requests\Partner\ListPartner;
 use App\Persistence\Enums\Billingo\Currency;
 use App\Persistence\Enums\Billingo\Language;
 use App\Persistence\Enums\Billingo\PaymentMethod;
@@ -23,7 +30,7 @@ class BillingoController extends Controller
 
     public function __construct()
     {
-        $this->connector = new BillingoConnector('2140df9a-2ea3-11ec-a040-0adb4fd9a356');
+        $this->connector = new Billingo('2140df9a-2ea3-11ec-a040-0adb4fd9a356');
     }
 
     /**
@@ -35,7 +42,7 @@ class BillingoController extends Controller
     public function createDocument(Request $request): JsonResponse
     {
         try {
-            $makeDocumentRequest = new Create;
+            $makeDocumentRequest = new CreateDocument();
             $makeDocumentRequest->body()->merge([
                 //                "vendor_id" => $request->get("vendor_id"), // Szállító
                 'partner_id' => $request->get('partner_id'),
@@ -89,24 +96,10 @@ class BillingoController extends Controller
     public function getDocumentList(Request $request): JsonResponse
     {
         try {
-            $request = new GetList(
-                page: $request->get('page', 1),
-                per_page: $request->get('per_page', 25),
-                payment_method: $request->get('payment_method'),
-                payment_status: $request->get('payment_status'),
-                start_date: $request->get('start_date', now()->startOfYear()->format('Y-m-d')),
-                end_date: $request->get('end_date', now()->format('Y-m-d')),
-                start_number: $request->get('start_number', 1),
-                end_number: $request->get('end_number', 10),
-                start_year: $request->get('start_year', now()->startOfYear()->format('Y')),
-                end_year: $request->get('end_year', now()->startOfYear()->format('Y')),
-                type: $request->get('type', 'invoice'),
-                paid_start_date: $request->get('paid_start_date'),
-                paid_end_date: $request->get('paid_end_date'),
-                fulfillment_start_date: $request->get('fulfillment_start_date'),
-                fulfillment_end_date: $request->get('fulfillment_end_date'),
-                last_modified_date: $request->get('last_modified_date')
+            $request = new ListDocument(
+
             );
+            dd($request);
             $createResponse = $this->connector->send($request);
 
             return response()->json($createResponse->json(), $createResponse->status());
@@ -124,7 +117,7 @@ class BillingoController extends Controller
     public function getOneDocument(Request $request): JsonResponse
     {
         try {
-            $request = new GetOne((int) $request->route('id'));
+            $request = new GetDocument((int) $request->route('id'));
             $createResponse = $this->connector->send($request);
 
             return response()->json($createResponse->json(), $createResponse->status());
@@ -143,10 +136,10 @@ class BillingoController extends Controller
     {
         try {
             $id = (int) $request->route('id');
-            $getOneRequest = new GetOne($id);
+            $getOneRequest = new GetDocument($id);
             $fileName = Arr::get($this->connector->send($getOneRequest)->json(), 'invoice_number');
 
-            $request = new Download($id);
+            $request = new DownloadDocument($id);
             $request->headers()->add('Accept', 'application/pdf');
             $createResponse = $this->connector->send($request);
 
@@ -159,5 +152,12 @@ class BillingoController extends Controller
         } catch (Exception $exception) {
             dd($exception);
         }
+    }
+
+    public function partners(Request $request)
+    {
+        $request = new ListPartner($request->get('page'), $request->get('query'));
+        $partner = $this->connector->send($request);
+        dd($partner);
     }
 }

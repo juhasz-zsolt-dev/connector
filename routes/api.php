@@ -21,4 +21,8 @@ Route::group(['prefix' => 'billingo/v3'], function () {
         Route::get('/{id}', [BillingoController::class, 'getOneDocument'])->name('billingo.documents.one');
         Route::get('/{id}/download', [BillingoController::class, 'downloadDocument'])->name('billingo.documents.one');
     });
+
+    Route::group(["prefix" => "partners"], function (){
+        Route::get("/", [BillingoController::class, 'partners']);
+    });
 });

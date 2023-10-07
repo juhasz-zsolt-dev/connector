@@ -13,7 +13,7 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, ValidatesRequests;
 
-    public function errorResponse(Exception $exception, string $errorMessage = 'Something went wrong', string $channel): JsonResponse
+    public function errorResponse(Exception $exception, string $errorMessage, string $channel): JsonResponse
     {
         Log::channel()->error(
             $exception->getMessage(),
@@ -23,6 +23,7 @@ class Controller extends BaseController
                 'trace' => $exception->getTraceAsString(),
             ]
         );
+
         return response()->json([
             'status' => 'error',
             'message' => $errorMessage,
