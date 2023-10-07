@@ -2,7 +2,6 @@
 
 namespace App\Http\Integrations\PayPal\Requests\Orders;
 
-use DateTime;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -13,22 +12,17 @@ use Saloon\Traits\Body\HasJsonBody;
  */
 class CapturePaymentForOrder extends Request implements HasBody
 {
-	use HasJsonBody;
+    use HasJsonBody;
 
-	protected Method $method = Method::POST;
+    protected Method $method = Method::POST;
 
+    public function resolveEndpoint(): string
+    {
+        return "/v2/checkout/orders/{$this->orderId}/capture";
+    }
 
-	public function resolveEndpoint(): string
-	{
-		return "/v2/checkout/orders/{$this->orderId}/capture";
-	}
-
-
-	/**
-	 * @param string $orderId
-	 */
-	public function __construct(
-		protected string $orderId,
-	) {
-	}
+    public function __construct(
+        protected string $orderId,
+    ) {
+    }
 }

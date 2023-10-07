@@ -2,7 +2,6 @@
 
 namespace App\Http\Integrations\PayPal\Requests\ManageAccounts;
 
-use DateTime;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -13,51 +12,38 @@ use Saloon\Traits\Body\HasJsonBody;
  */
 class CreateManagedAccount extends Request implements HasBody
 {
-	use HasJsonBody;
+    use HasJsonBody;
 
-	protected Method $method = Method::POST;
+    protected Method $method = Method::POST;
 
+    public function resolveEndpoint(): string
+    {
+        return '/v3/customer/managed-accounts';
+    }
 
-	public function resolveEndpoint(): string
-	{
-		return "/v3/customer/managed-accounts";
-	}
+    public function __construct(
+        protected mixed $externalId = null,
+        protected mixed $legalCountryCode = null,
+        protected mixed $organization = null,
+        protected mixed $userId = null,
+        protected mixed $primaryCurrencyCode = null,
+        protected mixed $individualOwners = null,
+        protected mixed $businessEntity = null,
+        protected mixed $agreements = null,
+    ) {
+    }
 
-
-	/**
-	 * @param null|mixed $externalId
-	 * @param null|mixed $legalCountryCode
-	 * @param null|mixed $organization
-	 * @param null|mixed $userId
-	 * @param null|mixed $primaryCurrencyCode
-	 * @param null|mixed $individualOwners
-	 * @param null|mixed $businessEntity
-	 * @param null|mixed $agreements
-	 */
-	public function __construct(
-		protected mixed $externalId = null,
-		protected mixed $legalCountryCode = null,
-		protected mixed $organization = null,
-		protected mixed $userId = null,
-		protected mixed $primaryCurrencyCode = null,
-		protected mixed $individualOwners = null,
-		protected mixed $businessEntity = null,
-		protected mixed $agreements = null,
-	) {
-	}
-
-
-	public function defaultBody(): array
-	{
-		return array_filter([
-			'external_id' => $this->externalId,
-			'legal_country_code' => $this->legalCountryCode,
-			'organization' => $this->organization,
-			'user_id' => $this->userId,
-			'primary_currency_code' => $this->primaryCurrencyCode,
-			'individual_owners' => $this->individualOwners,
-			'business_entity' => $this->businessEntity,
-			'agreements' => $this->agreements,
-		]);
-	}
+    public function defaultBody(): array
+    {
+        return array_filter([
+            'external_id' => $this->externalId,
+            'legal_country_code' => $this->legalCountryCode,
+            'organization' => $this->organization,
+            'user_id' => $this->userId,
+            'primary_currency_code' => $this->primaryCurrencyCode,
+            'individual_owners' => $this->individualOwners,
+            'business_entity' => $this->businessEntity,
+            'agreements' => $this->agreements,
+        ]);
+    }
 }

@@ -22,12 +22,12 @@ class ListProduct extends Request
 
     public function __construct(
         protected ?int $page = null,
-        protected ?string $query = null,
+        protected ?string $productQuery = null,
     ) {
     }
 
     public function defaultQuery(): array
     {
-        return array_filter(['page' => $this->page, 'query' => $this->query]);
+        return array_filter(['page' => $this->page, 'query' => $this->productQuery]);
     }
 }

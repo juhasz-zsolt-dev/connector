@@ -2,7 +2,6 @@
 
 namespace App\Http\Integrations\Aggreg8\v5\Requests\Misc;
 
-use DateTime;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -13,30 +12,23 @@ use Saloon\Traits\Body\HasJsonBody;
  */
 class AddUser extends Request implements HasBody
 {
-	use HasJsonBody;
+    use HasJsonBody;
 
-	protected Method $method = Method::POST;
+    protected Method $method = Method::POST;
 
+    public function resolveEndpoint(): string
+    {
+        return '/users';
+    }
 
-	public function resolveEndpoint(): string
-	{
-		return "/users";
-	}
+    public function __construct(
+        protected mixed $id = null,
+        protected mixed $email = null,
+    ) {
+    }
 
-
-	/**
-	 * @param null|mixed $id
-	 * @param null|mixed $email
-	 */
-	public function __construct(
-		protected mixed $id = null,
-		protected mixed $email = null,
-	) {
-	}
-
-
-	public function defaultBody(): array
-	{
-		return array_filter(['_id' => $this->id, 'email' => $this->email]);
-	}
+    public function defaultBody(): array
+    {
+        return array_filter(['_id' => $this->id, 'email' => $this->email]);
+    }
 }

@@ -1,8 +1,5 @@
 <?php
 
-use Crescat\SaloonSdkGenerator\CodeGenerator;
-use Crescat\SaloonSdkGenerator\Factory;
-use Crescat\SaloonSdkGenerator\Helpers\Utils;
 use Illuminate\Support\Facades\Route;
 
 /*

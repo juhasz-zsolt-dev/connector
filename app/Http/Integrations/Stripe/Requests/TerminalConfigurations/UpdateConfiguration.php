@@ -2,7 +2,6 @@
 
 namespace App\Http\Integrations\Stripe\Requests\TerminalConfigurations;
 
-use DateTime;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -13,22 +12,17 @@ use Saloon\Traits\Body\HasJsonBody;
  */
 class UpdateConfiguration extends Request implements HasBody
 {
-	use HasJsonBody;
+    use HasJsonBody;
 
-	protected Method $method = Method::POST;
+    protected Method $method = Method::POST;
 
+    public function resolveEndpoint(): string
+    {
+        return "/v1/terminal/configurations/{$this->configuration}";
+    }
 
-	public function resolveEndpoint(): string
-	{
-		return "/v1/terminal/configurations/{$this->configuration}";
-	}
-
-
-	/**
-	 * @param string $configuration
-	 */
-	public function __construct(
-		protected string $configuration,
-	) {
-	}
+    public function __construct(
+        protected string $configuration,
+    ) {
+    }
 }

@@ -29,12 +29,18 @@ class RouteServiceProvider extends ServiceProvider
         });
 
         $this->routes(function () {
-            Route::middleware('api')
-                ->prefix('api')
-                ->group(base_path('routes/api.php'));
+            $this->billingo_v3_api();
 
             Route::middleware('web')
                 ->group(base_path('routes/web.php'));
         });
+    }
+
+    private function billingo_v3_api()
+    {
+        Route::middleware('api')
+            ->prefix('billingo/v3')
+            ->name('billingo.')
+            ->group(base_path('routes/billingo-api.php'));
     }
 }

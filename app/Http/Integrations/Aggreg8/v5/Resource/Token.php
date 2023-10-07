@@ -8,8 +8,8 @@ use Saloon\Http\Response;
 
 class Token extends Resource
 {
-	public function getToken(): Response
-	{
-		return $this->connector->send(new GetToken());
-	}
+    public function getToken(): Response
+    {
+        return $this->connector->send(new GetToken());
+    }
 }

@@ -32,31 +32,30 @@ use Saloon\Http\Response;
 class Document extends Resource
 {
     /**
-     * @param int|null $page
-     * @param int|null $blockId Filter documents by the identifier of your DocumentBlock.
-     * @param int|null $partnerId Filter documents by the identifier of your Partner.
-     * @param string|null $paymentMethod Filter documents by PaymentMethod value.
-     * @param string|null $paymentStatus Filter documents by PaymentStatus value.
-     * @param string|null $startDate Filter documents by their invoice date.
-     * @param string|null $endDate Filter documents by their invoice date.
-     * @param int|null $startNumber Starting number of the document, should not contain year or any other formatting. Required if `start_year` given
-     * @param int|null $endNumber Ending number of the document, should not contain year or any other formatting. Required if `end_year` given
-     * @param int|null $startYear Year for `start_number` parameter. Required if `start_number` given.
-     * @param int|null $endYear Year for `end_number` parameter. Required if `end_number` given.
-     * @param string|null $type Filter documents by type
-     * @param string|null $query Filter documents by the given text
-     * @param string|null $paidStartDate Filter documents by their payment date.
-     * @param string|null $paidEndDate Filter documents by their payment date.
-     * @param string|null $fulfillmentStartDate Filter documents by their fulfillment date.
-     * @param string|null $fulfillmentEndDate Filter documents by their fulfillment date.
-     * @param string|null $lastModifiedDate Filter documents by their last modified date.
-     * @return Response
-     * @throws ReflectionException
+     * @param  int|null  $blockId Filter documents by the identifier of your DocumentBlock.
+     * @param  int|null  $partnerId Filter documents by the identifier of your Partner.
+     * @param  string|null  $paymentMethod Filter documents by PaymentMethod value.
+     * @param  string|null  $paymentStatus Filter documents by PaymentStatus value.
+     * @param  string|null  $startDate Filter documents by their invoice date.
+     * @param  string|null  $endDate Filter documents by their invoice date.
+     * @param  int|null  $startNumber Starting number of the document, should not contain year or any other formatting. Required if `start_year` given
+     * @param  int|null  $endNumber Ending number of the document, should not contain year or any other formatting. Required if `end_year` given
+     * @param  int|null  $startYear Year for `start_number` parameter. Required if `start_number` given.
+     * @param  int|null  $endYear Year for `end_number` parameter. Required if `end_number` given.
+     * @param  string|null  $type Filter documents by type
+     * @param  string|null  $paidStartDate Filter documents by their payment date.
+     * @param  string|null  $paidEndDate Filter documents by their payment date.
+     * @param  string|null  $fulfillmentStartDate Filter documents by their fulfillment date.
+     * @param  string|null  $fulfillmentEndDate Filter documents by their fulfillment date.
+     * @param  string|null  $lastModifiedDate Filter documents by their last modified date.
+     *
      * @throws InvalidResponseClassException
      * @throws PendingRequestException
+     * @throws ReflectionException
      */
     public function listDocument(
         ?int $page,
+        ?int $perPage,
         ?int $blockId,
         ?int $partnerId,
         ?string $paymentMethod,
@@ -68,99 +67,119 @@ class Document extends Resource
         ?int $startYear,
         ?int $endYear,
         ?string $type,
-        ?string $query,
+        ?string $documentQuery,
         ?string $paidStartDate,
         ?string $paidEndDate,
         ?string $fulfillmentStartDate,
         ?string $fulfillmentEndDate,
         ?string $lastModifiedDate,
     ): Response {
-        return $this->connector->send(new ListDocument($page, $blockId, $partnerId, $paymentMethod, $paymentStatus, $startDate, $endDate, $startNumber, $endNumber, $startYear, $endYear, $type, $query, $paidStartDate, $paidEndDate, $fulfillmentStartDate, $fulfillmentEndDate, $lastModifiedDate));
+        return $this->connector->send(request: new ListDocument(
+            $page,
+            perPage: $perPage,
+            blockId: $blockId,
+            partnerId: $partnerId,
+            paymentMethod: $paymentMethod,
+            paymentStatus: $paymentStatus,
+            startDate: $startDate,
+            endDate: $endDate,
+            startNumber: $startNumber,
+            endNumber: $endNumber,
+            startYear: $startYear,
+            endYear: $endYear,
+            type: $type,
+            documentQuery: $documentQuery,
+            paidStartDate: $paidStartDate,
+            paidEndDate: $paidEndDate,
+            fulfillmentStartDate: $fulfillmentStartDate,
+            fulfillmentEndDate: $fulfillmentEndDate,
+            lastModifiedDate: $lastModifiedDate
+        ));
     }
 
     public function createDocument(): Response
     {
-        return $this->connector->send(new CreateDocument());
+        return $this->connector->send(request: new CreateDocument());
     }
 
     public function createReceipt(): Response
     {
-        return $this->connector->send(new CreateReceipt());
+        return $this->connector->send(request: new CreateReceipt());
     }
 
     public function createReceiptFromDraft(int $id): Response
     {
-        return $this->connector->send(new CreateReceiptFromDraft($id));
+        return $this->connector->send(request: new CreateReceiptFromDraft(id: $id));
     }
 
     public function getDocumentByVendorId(string $vendorId): Response
     {
-        return $this->connector->send(new GetDocumentByVendorId($vendorId));
+        return $this->connector->send(request: new GetDocumentByVendorId(vendorId: $vendorId));
     }
 
     public function getDocument(int $id): Response
     {
-        return $this->connector->send(new GetDocument($id));
+        return $this->connector->send(request: new GetDocument(id: $id));
     }
 
     public function createDocumentFromDraft(int $id): Response
     {
-        return $this->connector->send(new CreateDocumentFromDraft($id));
+        return $this->connector->send(request: new CreateDocumentFromDraft(id: $id));
     }
 
     public function deleteDocument(int $id): Response
     {
-        return $this->connector->send(new DeleteDocument($id));
+        return $this->connector->send(request: new DeleteDocument(id: $id));
     }
 
     public function archiveDocument(int $id): Response
     {
-        return $this->connector->send(new ArchiveDocument($id));
+        return $this->connector->send(request: new ArchiveDocument(id: $id));
     }
 
     public function cancelDocument(int $id): Response
     {
-        return $this->connector->send(new CancelDocument($id));
+        return $this->connector->send(request: new CancelDocument(id: $id));
     }
 
     public function documentCopy(int $id): Response
     {
-        return $this->connector->send(new DocumentCopy($id));
+        return $this->connector->send(request: new DocumentCopy(id: $id));
     }
 
     public function createDocumentFromProforma(int $id): Response
     {
-        return $this->connector->send(new CreateDocumentFromProforma($id));
+        return $this->connector->send(request: new CreateDocumentFromProforma(id: $id));
     }
 
     public function createModificationDocument(int $id): Response
     {
-        return $this->connector->send(new CreateModificationDocument($id));
+        return $this->connector->send(request: new CreateModificationDocument(id: $id));
     }
 
     public function downloadDocument(int $id): Response
     {
-        return $this->connector->send(new DownloadDocument($id));
+        return $this->connector->send(request: new DownloadDocument(id: $id));
     }
 
     public function getOnlineSzamlaStatus(int $id): Response
     {
-        return $this->connector->send(new GetOnlineSzamlaStatus($id));
+        return $this->connector->send(request: new GetOnlineSzamlaStatus(id: $id));
     }
 
     public function getPayment(int $id): Response
     {
-        return $this->connector->send(new GetPayment($id));
+        return $this->connector->send(request: new GetPayment(id: $id));
     }
 
     public function updatePayment(int $id): Response
     {
-        return $this->connector->send(new UpdatePayment($id));
+        return $this->connector->send(request: new UpdatePayment(id: $id));
     }
 
     public function deletePayment(int $id): Response
     {
-        return $this->connector->send(new DeletePayment($id));
+        return $this->connector->send(request: new DeletePayment(id: $id));
     }
 
     /**
@@ -168,16 +187,16 @@ class Document extends Resource
      */
     public function posPrint(int $id, float|int $size): Response
     {
-        return $this->connector->send(new PosPrint($id, $size));
+        return $this->connector->send(request: new PosPrint(id: $id, size: $size));
     }
 
     public function getPublicUrl(int $id): Response
     {
-        return $this->connector->send(new GetPublicUrl($id));
+        return $this->connector->send(request: new GetPublicUrl(id: $id));
     }
 
     public function sendDocument(int $id): Response
     {
-        return $this->connector->send(new SendDocument($id));
+        return $this->connector->send(request: new SendDocument(id: $id));
     }
 }

@@ -22,86 +22,73 @@ use Saloon\Http\Connector;
  */
 class Aggreg8 extends Connector
 {
-	public function resolveBaseUrl(): string
-	{
-		return '/';
-	}
+    public function resolveBaseUrl(): string
+    {
+        return '/';
+    }
 
+    public function accounts(): Accounts
+    {
+        return new Accounts($this);
+    }
 
-	public function accounts(): Accounts
-	{
-		return new Accounts($this);
-	}
+    public function categories(): Categories
+    {
+        return new Categories($this);
+    }
 
+    public function consentedAccounts(): ConsentedAccounts
+    {
+        return new ConsentedAccounts($this);
+    }
 
-	public function categories(): Categories
-	{
-		return new Categories($this);
-	}
+    public function customer(): Customer
+    {
+        return new Customer($this);
+    }
 
+    public function health(): Health
+    {
+        return new Health($this);
+    }
 
-	public function consentedAccounts(): ConsentedAccounts
-	{
-		return new ConsentedAccounts($this);
-	}
+    public function init(): Init
+    {
+        return new Init($this);
+    }
 
+    public function logo(): Logo
+    {
+        return new Logo($this);
+    }
 
-	public function customer(): Customer
-	{
-		return new Customer($this);
-	}
+    public function misc(): Misc
+    {
+        return new Misc($this);
+    }
 
+    public function state(): State
+    {
+        return new State($this);
+    }
 
-	public function health(): Health
-	{
-		return new Health($this);
-	}
+    public function swagger(): Swagger
+    {
+        return new Swagger($this);
+    }
 
+    public function token(): Token
+    {
+        return new Token($this);
+    }
 
-	public function init(): Init
-	{
-		return new Init($this);
-	}
+    public function transactions(): Transactions
+    {
+        return new Transactions($this);
+    }
 
-
-	public function logo(): Logo
-	{
-		return new Logo($this);
-	}
-
-
-	public function misc(): Misc
-	{
-		return new Misc($this);
-	}
-
-
-	public function state(): State
-	{
-		return new State($this);
-	}
-
-
-	public function swagger(): Swagger
-	{
-		return new Swagger($this);
-	}
-
-
-	public function token(): Token
-	{
-		return new Token($this);
-	}
-
-
-	public function transactions(): Transactions
-	{
-		return new Transactions($this);
-	}
-
-
-	public function users(): Users
-	{
-		return new Users($this);
-	}
+    public function users(): Users
+    {
+        return new Users($this);
+    }
 }

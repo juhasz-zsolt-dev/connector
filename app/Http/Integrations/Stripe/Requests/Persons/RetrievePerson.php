@@ -2,7 +2,6 @@
 
 namespace App\Http\Integrations\Stripe\Requests\Persons;
 
-use DateTime;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
@@ -11,32 +10,27 @@ use Saloon\Http\Request;
  */
 class RetrievePerson extends Request
 {
-	protected Method $method = Method::GET;
+    protected Method $method = Method::GET;
 
+    public function resolveEndpoint(): string
+    {
+        return "/v1/accounts/{$this->account}/persons/{$this->person}";
+    }
 
-	public function resolveEndpoint(): string
-	{
-		return "/v1/accounts/{$this->account}/persons/{$this->person}";
-	}
+    /**
+     * @param  null|string  $expand0 Specifies which fields in the response should be expanded.
+     * @param  null|string  $expand1 Specifies which fields in the response should be expanded.
+     */
+    public function __construct(
+        protected string $account,
+        protected string $person,
+        protected ?string $expand0 = null,
+        protected ?string $expand1 = null,
+    ) {
+    }
 
-
-	/**
-	 * @param string $account
-	 * @param string $person
-	 * @param null|string $expand0 Specifies which fields in the response should be expanded.
-	 * @param null|string $expand1 Specifies which fields in the response should be expanded.
-	 */
-	public function __construct(
-		protected string $account,
-		protected string $person,
-		protected ?string $expand0 = null,
-		protected ?string $expand1 = null,
-	) {
-	}
-
-
-	public function defaultQuery(): array
-	{
-		return array_filter(['expand[0]' => $this->expand0, 'expand[1]' => $this->expand1]);
-	}
+    public function defaultQuery(): array
+    {
+        return array_filter(['expand[0]' => $this->expand0, 'expand[1]' => $this->expand1]);
+    }
 }

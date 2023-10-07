@@ -2,7 +2,6 @@
 
 namespace App\Http\Integrations\Stripe\Requests\InvoiceItems;
 
-use DateTime;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
@@ -11,20 +10,15 @@ use Saloon\Http\Request;
  */
 class DeleteInvoiceItem extends Request
 {
-	protected Method $method = Method::DELETE;
+    protected Method $method = Method::DELETE;
 
+    public function resolveEndpoint(): string
+    {
+        return "/v1/invoiceitems/{$this->invoiceitem}";
+    }
 
-	public function resolveEndpoint(): string
-	{
-		return "/v1/invoiceitems/{$this->invoiceitem}";
-	}
-
-
-	/**
-	 * @param string $invoiceitem
-	 */
-	public function __construct(
-		protected string $invoiceitem,
-	) {
-	}
+    public function __construct(
+        protected string $invoiceitem,
+    ) {
+    }
 }

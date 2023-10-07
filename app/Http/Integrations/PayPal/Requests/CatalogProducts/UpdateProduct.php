@@ -2,7 +2,6 @@
 
 namespace App\Http\Integrations\PayPal\Requests\CatalogProducts;
 
-use DateTime;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -13,30 +12,23 @@ use Saloon\Traits\Body\HasJsonBody;
  */
 class UpdateProduct extends Request implements HasBody
 {
-	use HasJsonBody;
+    use HasJsonBody;
 
-	protected Method $method = Method::PATCH;
+    protected Method $method = Method::PATCH;
 
+    public function resolveEndpoint(): string
+    {
+        return "/v1/catalogs/products/{$this->productId}";
+    }
 
-	public function resolveEndpoint(): string
-	{
-		return "/v1/catalogs/products/{$this->productId}";
-	}
+    public function __construct(
+        protected string $productId,
+        protected ?array $values = null,
+    ) {
+    }
 
-
-	/**
-	 * @param string $productId
-	 * @param null|array $values
-	 */
-	public function __construct(
-		protected string $productId,
-		protected ?array $values = null,
-	) {
-	}
-
-
-	public function defaultBody(): array
-	{
-		return array_filter(['values' => $this->values]);
-	}
+    public function defaultBody(): array
+    {
+        return array_filter(['values' => $this->values]);
+    }
 }

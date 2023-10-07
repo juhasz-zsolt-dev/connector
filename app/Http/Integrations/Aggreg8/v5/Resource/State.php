@@ -8,11 +8,8 @@ use Saloon\Http\Response;
 
 class State extends Resource
 {
-	/**
-	 * @param string $userFlowId
-	 */
-	public function getUserFlow(string $userFlowId): Response
-	{
-		return $this->connector->send(new GetUserFlow($userFlowId));
-	}
+    public function getUserFlow(string $userFlowId): Response
+    {
+        return $this->connector->send(new GetUserFlow($userFlowId));
+    }
 }

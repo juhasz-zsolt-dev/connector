@@ -2,7 +2,6 @@
 
 namespace App\Http\Integrations\PayPal\Requests\Templates;
 
-use DateTime;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
@@ -11,20 +10,15 @@ use Saloon\Http\Request;
  */
 class DeleteTemplate extends Request
 {
-	protected Method $method = Method::DELETE;
+    protected Method $method = Method::DELETE;
 
+    public function resolveEndpoint(): string
+    {
+        return "/v2/invoicing/templates/{$this->templateId}";
+    }
 
-	public function resolveEndpoint(): string
-	{
-		return "/v2/invoicing/templates/{$this->templateId}";
-	}
-
-
-	/**
-	 * @param string $templateId
-	 */
-	public function __construct(
-		protected string $templateId,
-	) {
-	}
+    public function __construct(
+        protected string $templateId,
+    ) {
+    }
 }

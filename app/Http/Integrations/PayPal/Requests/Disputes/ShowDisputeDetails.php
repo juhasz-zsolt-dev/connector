@@ -2,7 +2,6 @@
 
 namespace App\Http\Integrations\PayPal\Requests\Disputes;
 
-use DateTime;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
@@ -11,20 +10,15 @@ use Saloon\Http\Request;
  */
 class ShowDisputeDetails extends Request
 {
-	protected Method $method = Method::GET;
+    protected Method $method = Method::GET;
 
+    public function resolveEndpoint(): string
+    {
+        return "/v1/customer/disputes/{$this->disputeId}";
+    }
 
-	public function resolveEndpoint(): string
-	{
-		return "/v1/customer/disputes/{$this->disputeId}";
-	}
-
-
-	/**
-	 * @param string $disputeId
-	 */
-	public function __construct(
-		protected string $disputeId,
-	) {
-	}
+    public function __construct(
+        protected string $disputeId,
+    ) {
+    }
 }

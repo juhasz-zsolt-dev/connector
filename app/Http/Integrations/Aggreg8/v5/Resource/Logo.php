@@ -10,26 +10,18 @@ use Saloon\Http\Response;
 
 class Logo extends Resource
 {
-	/**
-	 * @param string $bankId
-	 */
-	public function getBankLogo(string $bankId): Response
-	{
-		return $this->connector->send(new GetBankLogo($bankId));
-	}
+    public function getBankLogo(string $bankId): Response
+    {
+        return $this->connector->send(new GetBankLogo($bankId));
+    }
 
+    public function getCustomerLogo(): Response
+    {
+        return $this->connector->send(new GetCustomerLogo());
+    }
 
-	public function getCustomerLogo(): Response
-	{
-		return $this->connector->send(new GetCustomerLogo());
-	}
-
-
-	/**
-	 * @param mixed $dataUri
-	 */
-	public function updateCustomerLogo(mixed $dataUri): Response
-	{
-		return $this->connector->send(new UpdateCustomerLogo($dataUri));
-	}
+    public function updateCustomerLogo(mixed $dataUri): Response
+    {
+        return $this->connector->send(new UpdateCustomerLogo($dataUri));
+    }
 }

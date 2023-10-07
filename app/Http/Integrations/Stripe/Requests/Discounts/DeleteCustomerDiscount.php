@@ -2,7 +2,6 @@
 
 namespace App\Http\Integrations\Stripe\Requests\Discounts;
 
-use DateTime;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
@@ -11,20 +10,15 @@ use Saloon\Http\Request;
  */
 class DeleteCustomerDiscount extends Request
 {
-	protected Method $method = Method::DELETE;
+    protected Method $method = Method::DELETE;
 
+    public function resolveEndpoint(): string
+    {
+        return "/v1/customers/{$this->customer}/discount";
+    }
 
-	public function resolveEndpoint(): string
-	{
-		return "/v1/customers/{$this->customer}/discount";
-	}
-
-
-	/**
-	 * @param string $customer
-	 */
-	public function __construct(
-		protected string $customer,
-	) {
-	}
+    public function __construct(
+        protected string $customer,
+    ) {
+    }
 }

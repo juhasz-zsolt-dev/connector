@@ -2,7 +2,6 @@
 
 namespace App\Http\Integrations\Aggreg8\v5\Requests\Categories;
 
-use DateTime;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
@@ -11,20 +10,15 @@ use Saloon\Http\Request;
  */
 class GetCategoryById extends Request
 {
-	protected Method $method = Method::GET;
+    protected Method $method = Method::GET;
 
+    public function resolveEndpoint(): string
+    {
+        return "/categories/{$this->categoryId}";
+    }
 
-	public function resolveEndpoint(): string
-	{
-		return "/categories/{$this->categoryId}";
-	}
-
-
-	/**
-	 * @param string $categoryId
-	 */
-	public function __construct(
-		protected string $categoryId,
-	) {
-	}
+    public function __construct(
+        protected string $categoryId,
+    ) {
+    }
 }

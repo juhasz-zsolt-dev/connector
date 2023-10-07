@@ -8,8 +8,8 @@ use Saloon\Http\Response;
 
 class Health extends Resource
 {
-	public function health(): Response
-	{
-		return $this->connector->send(new HealthRequest());
-	}
+    public function health(): Response
+    {
+        return $this->connector->send(new HealthRequest());
+    }
 }

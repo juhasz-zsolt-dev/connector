@@ -8,8 +8,8 @@ use Saloon\Http\Response;
 
 class Swagger extends Resource
 {
-	public function getSwaggerDefinition(): Response
-	{
-		return $this->connector->send(new GetSwaggerDefinition());
-	}
+    public function getSwaggerDefinition(): Response
+    {
+        return $this->connector->send(new GetSwaggerDefinition());
+    }
 }

@@ -9,20 +9,13 @@ use Saloon\Http\Response;
 
 class Accounts extends Resource
 {
-	/**
-	 * @param string $userFlowId
-	 */
-	public function getAccountsFromCache(string $userFlowId): Response
-	{
-		return $this->connector->send(new GetAccountsFromCache($userFlowId));
-	}
+    public function getAccountsFromCache(string $userFlowId): Response
+    {
+        return $this->connector->send(new GetAccountsFromCache($userFlowId));
+    }
 
-
-	/**
-	 * @param string $accountId
-	 */
-	public function getAccountById(string $accountId): Response
-	{
-		return $this->connector->send(new GetAccountById($accountId));
-	}
+    public function getAccountById(string $accountId): Response
+    {
+        return $this->connector->send(new GetAccountById($accountId));
+    }
 }

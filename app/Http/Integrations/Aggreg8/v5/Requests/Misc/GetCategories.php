@@ -2,7 +2,6 @@
 
 namespace App\Http\Integrations\Aggreg8\v5\Requests\Misc;
 
-use DateTime;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
@@ -11,16 +10,14 @@ use Saloon\Http\Request;
  */
 class GetCategories extends Request
 {
-	protected Method $method = Method::GET;
+    protected Method $method = Method::GET;
 
+    public function resolveEndpoint(): string
+    {
+        return '/categories';
+    }
 
-	public function resolveEndpoint(): string
-	{
-		return "/categories";
-	}
-
-
-	public function __construct()
-	{
-	}
+    public function __construct()
+    {
+    }
 }

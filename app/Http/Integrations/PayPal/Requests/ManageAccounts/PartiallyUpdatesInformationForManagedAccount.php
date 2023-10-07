@@ -2,7 +2,6 @@
 
 namespace App\Http\Integrations\PayPal\Requests\ManageAccounts;
 
-use DateTime;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -13,30 +12,23 @@ use Saloon\Traits\Body\HasJsonBody;
  */
 class PartiallyUpdatesInformationForManagedAccount extends Request implements HasBody
 {
-	use HasJsonBody;
+    use HasJsonBody;
 
-	protected Method $method = Method::PATCH;
+    protected Method $method = Method::PATCH;
 
+    public function resolveEndpoint(): string
+    {
+        return "/v3/customer/managed-accounts/{$this->id}";
+    }
 
-	public function resolveEndpoint(): string
-	{
-		return "/v3/customer/managed-accounts/{$this->id}";
-	}
+    public function __construct(
+        protected string $id,
+        protected ?array $values = null,
+    ) {
+    }
 
-
-	/**
-	 * @param string $id
-	 * @param null|array $values
-	 */
-	public function __construct(
-		protected string $id,
-		protected ?array $values = null,
-	) {
-	}
-
-
-	public function defaultBody(): array
-	{
-		return array_filter(['values' => $this->values]);
-	}
+    public function defaultBody(): array
+    {
+        return array_filter(['values' => $this->values]);
+    }
 }

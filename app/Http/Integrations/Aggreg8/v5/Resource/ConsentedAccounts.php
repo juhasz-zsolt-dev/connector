@@ -8,12 +8,8 @@ use Saloon\Http\Response;
 
 class ConsentedAccounts extends Resource
 {
-	/**
-	 * @param string $infoSharingConsentId
-	 * @param string $accountId
-	 */
-	public function removeConsentedAccount(string $infoSharingConsentId, string $accountId): Response
-	{
-		return $this->connector->send(new RemoveConsentedAccount($infoSharingConsentId, $accountId));
-	}
+    public function removeConsentedAccount(string $infoSharingConsentId, string $accountId): Response
+    {
+        return $this->connector->send(new RemoveConsentedAccount($infoSharingConsentId, $accountId));
+    }
 }

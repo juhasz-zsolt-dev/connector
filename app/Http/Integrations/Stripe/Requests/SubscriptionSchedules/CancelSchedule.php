@@ -2,7 +2,6 @@
 
 namespace App\Http\Integrations\Stripe\Requests\SubscriptionSchedules;
 
-use DateTime;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -13,22 +12,17 @@ use Saloon\Traits\Body\HasJsonBody;
  */
 class CancelSchedule extends Request implements HasBody
 {
-	use HasJsonBody;
+    use HasJsonBody;
 
-	protected Method $method = Method::POST;
+    protected Method $method = Method::POST;
 
+    public function resolveEndpoint(): string
+    {
+        return "/v1/subscription_schedules/{$this->schedule}/cancel";
+    }
 
-	public function resolveEndpoint(): string
-	{
-		return "/v1/subscription_schedules/{$this->schedule}/cancel";
-	}
-
-
-	/**
-	 * @param string $schedule
-	 */
-	public function __construct(
-		protected string $schedule,
-	) {
-	}
+    public function __construct(
+        protected string $schedule,
+    ) {
+    }
 }

@@ -8,8 +8,8 @@ use Saloon\Http\Response;
 
 class TerminalConnectionTokens extends Resource
 {
-	public function createConnectionToken(): Response
-	{
-		return $this->connector->send(new CreateConnectionToken());
-	}
+    public function createConnectionToken(): Response
+    {
+        return $this->connector->send(new CreateConnectionToken());
+    }
 }

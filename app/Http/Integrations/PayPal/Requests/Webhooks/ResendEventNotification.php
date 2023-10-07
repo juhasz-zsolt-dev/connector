@@ -2,7 +2,6 @@
 
 namespace App\Http\Integrations\PayPal\Requests\Webhooks;
 
-use DateTime;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -13,30 +12,23 @@ use Saloon\Traits\Body\HasJsonBody;
  */
 class ResendEventNotification extends Request implements HasBody
 {
-	use HasJsonBody;
+    use HasJsonBody;
 
-	protected Method $method = Method::POST;
+    protected Method $method = Method::POST;
 
+    public function resolveEndpoint(): string
+    {
+        return "/v1/notifications/webhooks-events/{$this->eventId}/resend";
+    }
 
-	public function resolveEndpoint(): string
-	{
-		return "/v1/notifications/webhooks-events/{$this->eventId}/resend";
-	}
+    public function __construct(
+        protected string $eventId,
+        protected mixed $webhookIds = null,
+    ) {
+    }
 
-
-	/**
-	 * @param string $eventId
-	 * @param null|mixed $webhookIds
-	 */
-	public function __construct(
-		protected string $eventId,
-		protected mixed $webhookIds = null,
-	) {
-	}
-
-
-	public function defaultBody(): array
-	{
-		return array_filter(['webhook_ids' => $this->webhookIds]);
-	}
+    public function defaultBody(): array
+    {
+        return array_filter(['webhook_ids' => $this->webhookIds]);
+    }
 }

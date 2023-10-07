@@ -2,7 +2,6 @@
 
 namespace App\Http\Integrations\Stripe\Requests\Files;
 
-use DateTime;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -13,18 +12,16 @@ use Saloon\Traits\Body\HasJsonBody;
  */
 class CreateFile extends Request implements HasBody
 {
-	use HasJsonBody;
+    use HasJsonBody;
 
-	protected Method $method = Method::POST;
+    protected Method $method = Method::POST;
 
+    public function resolveEndpoint(): string
+    {
+        return '/v1/files';
+    }
 
-	public function resolveEndpoint(): string
-	{
-		return "/v1/files";
-	}
-
-
-	public function __construct()
-	{
-	}
+    public function __construct()
+    {
+    }
 }

@@ -2,7 +2,6 @@
 
 namespace App\Http\Integrations\Stripe\Requests\Payouts;
 
-use DateTime;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -13,22 +12,17 @@ use Saloon\Traits\Body\HasJsonBody;
  */
 class ReversePayout extends Request implements HasBody
 {
-	use HasJsonBody;
+    use HasJsonBody;
 
-	protected Method $method = Method::POST;
+    protected Method $method = Method::POST;
 
+    public function resolveEndpoint(): string
+    {
+        return "/v1/payouts/{$this->payout}/reverse";
+    }
 
-	public function resolveEndpoint(): string
-	{
-		return "/v1/payouts/{$this->payout}/reverse";
-	}
-
-
-	/**
-	 * @param string $payout
-	 */
-	public function __construct(
-		protected string $payout,
-	) {
-	}
+    public function __construct(
+        protected string $payout,
+    ) {
+    }
 }

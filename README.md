@@ -65,3 +65,6 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 # connector
+
+
+sdkgenerator generate:sdk 'code/juhasz-zsolt.dev/Generator/a8-ais.json' --type=postman  --name=Aggreg8  --output='code/juhasz-zsolt.dev/Generator/Aggreg8/v5' --namespace=App\\Http\\Integrations\\Aggreg8\\v5 --force

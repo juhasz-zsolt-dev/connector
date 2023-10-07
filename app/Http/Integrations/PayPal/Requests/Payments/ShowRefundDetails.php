@@ -2,7 +2,6 @@
 
 namespace App\Http\Integrations\PayPal\Requests\Payments;
 
-use DateTime;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
@@ -11,20 +10,15 @@ use Saloon\Http\Request;
  */
 class ShowRefundDetails extends Request
 {
-	protected Method $method = Method::GET;
+    protected Method $method = Method::GET;
 
+    public function resolveEndpoint(): string
+    {
+        return "/v2/payments/refunds/{$this->refundId}";
+    }
 
-	public function resolveEndpoint(): string
-	{
-		return "/v2/payments/refunds/{$this->refundId}";
-	}
-
-
-	/**
-	 * @param string $refundId
-	 */
-	public function __construct(
-		protected string $refundId,
-	) {
-	}
+    public function __construct(
+        protected string $refundId,
+    ) {
+    }
 }

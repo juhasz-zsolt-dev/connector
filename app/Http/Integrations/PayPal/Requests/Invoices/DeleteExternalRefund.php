@@ -2,7 +2,6 @@
 
 namespace App\Http\Integrations\PayPal\Requests\Invoices;
 
-use DateTime;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
@@ -11,22 +10,16 @@ use Saloon\Http\Request;
  */
 class DeleteExternalRefund extends Request
 {
-	protected Method $method = Method::DELETE;
+    protected Method $method = Method::DELETE;
 
+    public function resolveEndpoint(): string
+    {
+        return "/v2/invoicing/invoices/{$this->invoiceId}/refunds/{$this->transactionId}";
+    }
 
-	public function resolveEndpoint(): string
-	{
-		return "/v2/invoicing/invoices/{$this->invoiceId}/refunds/{$this->transactionId}";
-	}
-
-
-	/**
-	 * @param string $invoiceId
-	 * @param string $transactionId
-	 */
-	public function __construct(
-		protected string $invoiceId,
-		protected string $transactionId,
-	) {
-	}
+    public function __construct(
+        protected string $invoiceId,
+        protected string $transactionId,
+    ) {
+    }
 }

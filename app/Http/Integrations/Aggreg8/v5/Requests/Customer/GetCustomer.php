@@ -2,7 +2,6 @@
 
 namespace App\Http\Integrations\Aggreg8\v5\Requests\Customer;
 
-use DateTime;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
@@ -11,16 +10,14 @@ use Saloon\Http\Request;
  */
 class GetCustomer extends Request
 {
-	protected Method $method = Method::GET;
+    protected Method $method = Method::GET;
 
+    public function resolveEndpoint(): string
+    {
+        return '/customer';
+    }
 
-	public function resolveEndpoint(): string
-	{
-		return "/customer";
-	}
-
-
-	public function __construct()
-	{
-	}
+    public function __construct()
+    {
+    }
 }

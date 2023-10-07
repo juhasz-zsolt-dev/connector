@@ -8,11 +8,8 @@ use Saloon\Http\Response;
 
 class Categories extends Resource
 {
-	/**
-	 * @param string $categoryId
-	 */
-	public function getCategoryById(string $categoryId): Response
-	{
-		return $this->connector->send(new GetCategoryById($categoryId));
-	}
+    public function getCategoryById(string $categoryId): Response
+    {
+        return $this->connector->send(new GetCategoryById($categoryId));
+    }
 }

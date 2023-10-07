@@ -21,13 +21,18 @@ class ListPartner extends Request
     }
 
     public function __construct(
-        protected ?int $page = null,
-        protected ?string $query = '',
+        protected ?int $page = 1,
+        protected ?int $perPage = 25,
+        protected ?string $partnerQuery = '',
     ) {
     }
 
     public function defaultQuery(): array
     {
-        return array_filter(['page' => $this->page, 'query' => $this->query]);
+        return array_filter([
+            'page' => $this->page,
+            'perPage' => $this->perPage,
+            'query' => $this->partnerQuery,
+        ]);
     }
 }

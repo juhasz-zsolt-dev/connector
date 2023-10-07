@@ -2,7 +2,6 @@
 
 namespace App\Http\Integrations\Stripe\Requests\RadarValueListItems;
 
-use DateTime;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
@@ -11,20 +10,15 @@ use Saloon\Http\Request;
  */
 class DeleteValueListItem extends Request
 {
-	protected Method $method = Method::DELETE;
+    protected Method $method = Method::DELETE;
 
+    public function resolveEndpoint(): string
+    {
+        return "/v1/radar/value_list_items/{$this->item}";
+    }
 
-	public function resolveEndpoint(): string
-	{
-		return "/v1/radar/value_list_items/{$this->item}";
-	}
-
-
-	/**
-	 * @param string $item
-	 */
-	public function __construct(
-		protected string $item,
-	) {
-	}
+    public function __construct(
+        protected string $item,
+    ) {
+    }
 }

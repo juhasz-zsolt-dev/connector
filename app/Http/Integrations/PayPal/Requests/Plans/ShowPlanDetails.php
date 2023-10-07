@@ -2,7 +2,6 @@
 
 namespace App\Http\Integrations\PayPal\Requests\Plans;
 
-use DateTime;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
@@ -11,20 +10,15 @@ use Saloon\Http\Request;
  */
 class ShowPlanDetails extends Request
 {
-	protected Method $method = Method::GET;
+    protected Method $method = Method::GET;
 
+    public function resolveEndpoint(): string
+    {
+        return "/v1/billing/plans/{$this->billingPlanId}";
+    }
 
-	public function resolveEndpoint(): string
-	{
-		return "/v1/billing/plans/{$this->billingPlanId}";
-	}
-
-
-	/**
-	 * @param string $billingPlanId
-	 */
-	public function __construct(
-		protected string $billingPlanId,
-	) {
-	}
+    public function __construct(
+        protected string $billingPlanId,
+    ) {
+    }
 }

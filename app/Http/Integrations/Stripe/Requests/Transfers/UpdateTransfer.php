@@ -2,7 +2,6 @@
 
 namespace App\Http\Integrations\Stripe\Requests\Transfers;
 
-use DateTime;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -13,22 +12,17 @@ use Saloon\Traits\Body\HasJsonBody;
  */
 class UpdateTransfer extends Request implements HasBody
 {
-	use HasJsonBody;
+    use HasJsonBody;
 
-	protected Method $method = Method::POST;
+    protected Method $method = Method::POST;
 
+    public function resolveEndpoint(): string
+    {
+        return "/v1/transfers/{$this->transfer}";
+    }
 
-	public function resolveEndpoint(): string
-	{
-		return "/v1/transfers/{$this->transfer}";
-	}
-
-
-	/**
-	 * @param string $transfer
-	 */
-	public function __construct(
-		protected string $transfer,
-	) {
-	}
+    public function __construct(
+        protected string $transfer,
+    ) {
+    }
 }

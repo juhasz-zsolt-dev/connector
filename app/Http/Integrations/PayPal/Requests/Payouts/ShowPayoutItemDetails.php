@@ -2,7 +2,6 @@
 
 namespace App\Http\Integrations\PayPal\Requests\Payouts;
 
-use DateTime;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
@@ -11,20 +10,15 @@ use Saloon\Http\Request;
  */
 class ShowPayoutItemDetails extends Request
 {
-	protected Method $method = Method::GET;
+    protected Method $method = Method::GET;
 
+    public function resolveEndpoint(): string
+    {
+        return "/v1/payments/payouts-item/{$this->payoutItemId}";
+    }
 
-	public function resolveEndpoint(): string
-	{
-		return "/v1/payments/payouts-item/{$this->payoutItemId}";
-	}
-
-
-	/**
-	 * @param string $payoutItemId
-	 */
-	public function __construct(
-		protected string $payoutItemId,
-	) {
-	}
+    public function __construct(
+        protected string $payoutItemId,
+    ) {
+    }
 }

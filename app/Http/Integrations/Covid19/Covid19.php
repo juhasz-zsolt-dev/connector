@@ -11,20 +11,18 @@ use Saloon\Http\Connector;
  */
 class Covid19 extends Connector
 {
-	public function resolveBaseUrl(): string
-	{
-		return '/api';
-	}
+    public function resolveBaseUrl(): string
+    {
+        return '/api';
+    }
 
+    public function region(): Region
+    {
+        return new Region($this);
+    }
 
-	public function region(): Region
-	{
-		return new Region($this);
-	}
-
-
-	public function report(): Report
-	{
-		return new Report($this);
-	}
+    public function report(): Report
+    {
+        return new Report($this);
+    }
 }

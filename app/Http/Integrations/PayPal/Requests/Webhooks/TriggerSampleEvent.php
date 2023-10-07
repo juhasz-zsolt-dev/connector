@@ -2,7 +2,6 @@
 
 namespace App\Http\Integrations\PayPal\Requests\Webhooks;
 
-use DateTime;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -13,30 +12,23 @@ use Saloon\Traits\Body\HasJsonBody;
  */
 class TriggerSampleEvent extends Request implements HasBody
 {
-	use HasJsonBody;
+    use HasJsonBody;
 
-	protected Method $method = Method::POST;
+    protected Method $method = Method::POST;
 
+    public function resolveEndpoint(): string
+    {
+        return '/v1/catalogs/products';
+    }
 
-	public function resolveEndpoint(): string
-	{
-		return "/v1/catalogs/products";
-	}
+    public function __construct(
+        protected mixed $id = null,
+        protected mixed $name = null,
+    ) {
+    }
 
-
-	/**
-	 * @param null|mixed $id
-	 * @param null|mixed $name
-	 */
-	public function __construct(
-		protected mixed $id = null,
-		protected mixed $name = null,
-	) {
-	}
-
-
-	public function defaultBody(): array
-	{
-		return array_filter(['id' => $this->id, 'name' => $this->name]);
-	}
+    public function defaultBody(): array
+    {
+        return array_filter(['id' => $this->id, 'name' => $this->name]);
+    }
 }

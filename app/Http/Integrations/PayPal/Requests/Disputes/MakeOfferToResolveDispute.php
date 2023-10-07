@@ -2,7 +2,6 @@
 
 namespace App\Http\Integrations\PayPal\Requests\Disputes;
 
-use DateTime;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -13,34 +12,25 @@ use Saloon\Traits\Body\HasJsonBody;
  */
 class MakeOfferToResolveDispute extends Request implements HasBody
 {
-	use HasJsonBody;
+    use HasJsonBody;
 
-	protected Method $method = Method::POST;
+    protected Method $method = Method::POST;
 
+    public function resolveEndpoint(): string
+    {
+        return "/v1/customer/disputes/{$this->disputeId}/make-offer";
+    }
 
-	public function resolveEndpoint(): string
-	{
-		return "/v1/customer/disputes/{$this->disputeId}/make-offer";
-	}
+    public function __construct(
+        protected string $disputeId,
+        protected mixed $note = null,
+        protected mixed $offerAmount = null,
+        protected mixed $offerType = null,
+    ) {
+    }
 
-
-	/**
-	 * @param string $disputeId
-	 * @param null|mixed $note
-	 * @param null|mixed $offerAmount
-	 * @param null|mixed $offerType
-	 */
-	public function __construct(
-		protected string $disputeId,
-		protected mixed $note = null,
-		protected mixed $offerAmount = null,
-		protected mixed $offerType = null,
-	) {
-	}
-
-
-	public function defaultBody(): array
-	{
-		return array_filter(['note' => $this->note, 'offer_amount' => $this->offerAmount, 'offer_type' => $this->offerType]);
-	}
+    public function defaultBody(): array
+    {
+        return array_filter(['note' => $this->note, 'offer_amount' => $this->offerAmount, 'offer_type' => $this->offerType]);
+    }
 }

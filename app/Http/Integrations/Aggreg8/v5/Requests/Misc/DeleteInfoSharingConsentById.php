@@ -2,7 +2,6 @@
 
 namespace App\Http\Integrations\Aggreg8\v5\Requests\Misc;
 
-use DateTime;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
@@ -11,20 +10,15 @@ use Saloon\Http\Request;
  */
 class DeleteInfoSharingConsentById extends Request
 {
-	protected Method $method = Method::DELETE;
+    protected Method $method = Method::DELETE;
 
+    public function resolveEndpoint(): string
+    {
+        return "/info-sharing-consents/{$this->infoSharingConsentId}";
+    }
 
-	public function resolveEndpoint(): string
-	{
-		return "/info-sharing-consents/{$this->infoSharingConsentId}";
-	}
-
-
-	/**
-	 * @param string $infoSharingConsentId
-	 */
-	public function __construct(
-		protected string $infoSharingConsentId,
-	) {
-	}
+    public function __construct(
+        protected string $infoSharingConsentId,
+    ) {
+    }
 }

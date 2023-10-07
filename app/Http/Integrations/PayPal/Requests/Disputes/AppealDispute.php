@@ -2,7 +2,6 @@
 
 namespace App\Http\Integrations\PayPal\Requests\Disputes;
 
-use DateTime;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -13,22 +12,17 @@ use Saloon\Traits\Body\HasJsonBody;
  */
 class AppealDispute extends Request implements HasBody
 {
-	use HasJsonBody;
+    use HasJsonBody;
 
-	protected Method $method = Method::POST;
+    protected Method $method = Method::POST;
 
+    public function resolveEndpoint(): string
+    {
+        return "/v1/customer/disputes/{$this->disputeId}/appeal";
+    }
 
-	public function resolveEndpoint(): string
-	{
-		return "/v1/customer/disputes/{$this->disputeId}/appeal";
-	}
-
-
-	/**
-	 * @param string $disputeId
-	 */
-	public function __construct(
-		protected string $disputeId,
-	) {
-	}
+    public function __construct(
+        protected string $disputeId,
+    ) {
+    }
 }

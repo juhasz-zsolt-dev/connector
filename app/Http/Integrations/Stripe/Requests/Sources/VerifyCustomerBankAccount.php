@@ -2,7 +2,6 @@
 
 namespace App\Http\Integrations\Stripe\Requests\Sources;
 
-use DateTime;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -13,24 +12,18 @@ use Saloon\Traits\Body\HasJsonBody;
  */
 class VerifyCustomerBankAccount extends Request implements HasBody
 {
-	use HasJsonBody;
+    use HasJsonBody;
 
-	protected Method $method = Method::POST;
+    protected Method $method = Method::POST;
 
+    public function resolveEndpoint(): string
+    {
+        return "/v1/customers/{$this->customer}/sources/{$this->id}/verify";
+    }
 
-	public function resolveEndpoint(): string
-	{
-		return "/v1/customers/{$this->customer}/sources/{$this->id}/verify";
-	}
-
-
-	/**
-	 * @param string $customer
-	 * @param string $id
-	 */
-	public function __construct(
-		protected string $customer,
-		protected string $id,
-	) {
-	}
+    public function __construct(
+        protected string $customer,
+        protected string $id,
+    ) {
+    }
 }

@@ -8,11 +8,8 @@ use Saloon\Http\Response;
 
 class Discounts extends Resource
 {
-	/**
-	 * @param string $customer
-	 */
-	public function deleteCustomerDiscount(string $customer): Response
-	{
-		return $this->connector->send(new DeleteCustomerDiscount($customer));
-	}
+    public function deleteCustomerDiscount(string $customer): Response
+    {
+        return $this->connector->send(new DeleteCustomerDiscount($customer));
+    }
 }

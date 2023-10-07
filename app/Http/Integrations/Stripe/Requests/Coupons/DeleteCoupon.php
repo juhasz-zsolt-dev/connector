@@ -2,7 +2,6 @@
 
 namespace App\Http\Integrations\Stripe\Requests\Coupons;
 
-use DateTime;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
@@ -11,20 +10,15 @@ use Saloon\Http\Request;
  */
 class DeleteCoupon extends Request
 {
-	protected Method $method = Method::DELETE;
+    protected Method $method = Method::DELETE;
 
+    public function resolveEndpoint(): string
+    {
+        return "/v1/coupons/{$this->coupon}";
+    }
 
-	public function resolveEndpoint(): string
-	{
-		return "/v1/coupons/{$this->coupon}";
-	}
-
-
-	/**
-	 * @param string $coupon
-	 */
-	public function __construct(
-		protected string $coupon,
-	) {
-	}
+    public function __construct(
+        protected string $coupon,
+    ) {
+    }
 }

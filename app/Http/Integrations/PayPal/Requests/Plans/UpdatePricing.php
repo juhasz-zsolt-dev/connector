@@ -2,7 +2,6 @@
 
 namespace App\Http\Integrations\PayPal\Requests\Plans;
 
-use DateTime;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -13,30 +12,23 @@ use Saloon\Traits\Body\HasJsonBody;
  */
 class UpdatePricing extends Request implements HasBody
 {
-	use HasJsonBody;
+    use HasJsonBody;
 
-	protected Method $method = Method::POST;
+    protected Method $method = Method::POST;
 
+    public function resolveEndpoint(): string
+    {
+        return "/v1/billing/plans/{$this->billingPlanId}/update-pricing-schemes";
+    }
 
-	public function resolveEndpoint(): string
-	{
-		return "/v1/billing/plans/{$this->billingPlanId}/update-pricing-schemes";
-	}
+    public function __construct(
+        protected string $billingPlanId,
+        protected mixed $pricingSchemes = null,
+    ) {
+    }
 
-
-	/**
-	 * @param string $billingPlanId
-	 * @param null|mixed $pricingSchemes
-	 */
-	public function __construct(
-		protected string $billingPlanId,
-		protected mixed $pricingSchemes = null,
-	) {
-	}
-
-
-	public function defaultBody(): array
-	{
-		return array_filter(['pricing_schemes' => $this->pricingSchemes]);
-	}
+    public function defaultBody(): array
+    {
+        return array_filter(['pricing_schemes' => $this->pricingSchemes]);
+    }
 }

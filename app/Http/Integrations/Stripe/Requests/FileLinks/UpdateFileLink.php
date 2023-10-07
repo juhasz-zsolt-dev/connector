@@ -2,7 +2,6 @@
 
 namespace App\Http\Integrations\Stripe\Requests\FileLinks;
 
-use DateTime;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -13,22 +12,17 @@ use Saloon\Traits\Body\HasJsonBody;
  */
 class UpdateFileLink extends Request implements HasBody
 {
-	use HasJsonBody;
+    use HasJsonBody;
 
-	protected Method $method = Method::POST;
+    protected Method $method = Method::POST;
 
+    public function resolveEndpoint(): string
+    {
+        return "/v1/file_links/{$this->link}";
+    }
 
-	public function resolveEndpoint(): string
-	{
-		return "/v1/file_links/{$this->link}";
-	}
-
-
-	/**
-	 * @param string $link
-	 */
-	public function __construct(
-		protected string $link,
-	) {
-	}
+    public function __construct(
+        protected string $link,
+    ) {
+    }
 }

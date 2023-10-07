@@ -2,7 +2,6 @@
 
 namespace App\Http\Integrations\PayPal\Requests\ManageAccounts;
 
-use DateTime;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
@@ -11,28 +10,24 @@ use Saloon\Http\Request;
  */
 class SearchManagedAccountBySellerId extends Request
 {
-	protected Method $method = Method::GET;
+    protected Method $method = Method::GET;
 
+    public function resolveEndpoint(): string
+    {
+        return "/v3/customer/managed-accounts/{$this->id}";
+    }
 
-	public function resolveEndpoint(): string
-	{
-		return "/v3/customer/managed-accounts/{$this->id}";
-	}
+    /**
+     * @param  null|string  $views (Optional) The `views` query parameter can be used to request `process_view` in addition to the default GET response.
+     */
+    public function __construct(
+        protected string $id,
+        protected ?string $views = null,
+    ) {
+    }
 
-
-	/**
-	 * @param string $id
-	 * @param null|string $views (Optional) The `views` query parameter can be used to request `process_view` in addition to the default GET response.
-	 */
-	public function __construct(
-		protected string $id,
-		protected ?string $views = null,
-	) {
-	}
-
-
-	public function defaultQuery(): array
-	{
-		return array_filter(['views' => $this->views]);
-	}
+    public function defaultQuery(): array
+    {
+        return array_filter(['views' => $this->views]);
+    }
 }

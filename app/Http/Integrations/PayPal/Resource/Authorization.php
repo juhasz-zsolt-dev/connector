@@ -11,32 +11,26 @@ use Saloon\Http\Response;
 
 class Authorization extends Resource
 {
-	public function generateAccessToken(): Response
-	{
-		return $this->connector->send(new GenerateAccessToken());
-	}
+    public function generateAccessToken(): Response
+    {
+        return $this->connector->send(new GenerateAccessToken());
+    }
 
+    public function terminateAccessToken(): Response
+    {
+        return $this->connector->send(new TerminateAccessToken());
+    }
 
-	public function terminateAccessToken(): Response
-	{
-		return $this->connector->send(new TerminateAccessToken());
-	}
+    /**
+     * @param  string  $schema (Required) Filters the response by a schema. Supported value is `paypalv1.1`.
+     */
+    public function userInfo(?string $schema): Response
+    {
+        return $this->connector->send(new UserInfo($schema));
+    }
 
-
-	/**
-	 * @param string $schema (Required) Filters the response by a schema. Supported value is `paypalv1.1`.
-	 */
-	public function userInfo(?string $schema): Response
-	{
-		return $this->connector->send(new UserInfo($schema));
-	}
-
-
-	/**
-	 * @param mixed $customerId
-	 */
-	public function generateClientToken(mixed $customerId): Response
-	{
-		return $this->connector->send(new GenerateClientToken($customerId));
-	}
+    public function generateClientToken(mixed $customerId): Response
+    {
+        return $this->connector->send(new GenerateClientToken($customerId));
+    }
 }

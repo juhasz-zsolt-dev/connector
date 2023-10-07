@@ -23,92 +23,78 @@ use Saloon\Http\Connector;
  */
 class PayPal extends Connector
 {
-	public function resolveBaseUrl(): string
-	{
-		return 'TODO';
-	}
+    public function resolveBaseUrl(): string
+    {
+        return 'TODO';
+    }
 
+    public function authorization(): Authorization
+    {
+        return new Authorization($this);
+    }
 
-	public function authorization(): Authorization
-	{
-		return new Authorization($this);
-	}
+    public function catalogProducts(): CatalogProducts
+    {
+        return new CatalogProducts($this);
+    }
 
+    public function disputes(): Disputes
+    {
+        return new Disputes($this);
+    }
 
-	public function catalogProducts(): CatalogProducts
-	{
-		return new CatalogProducts($this);
-	}
+    public function invoices(): Invoices
+    {
+        return new Invoices($this);
+    }
 
+    public function manageAccounts(): ManageAccounts
+    {
+        return new ManageAccounts($this);
+    }
 
-	public function disputes(): Disputes
-	{
-		return new Disputes($this);
-	}
+    public function orders(): Orders
+    {
+        return new Orders($this);
+    }
 
+    public function payments(): Payments
+    {
+        return new Payments($this);
+    }
 
-	public function invoices(): Invoices
-	{
-		return new Invoices($this);
-	}
+    public function payouts(): Payouts
+    {
+        return new Payouts($this);
+    }
 
+    public function plans(): Plans
+    {
+        return new Plans($this);
+    }
 
-	public function manageAccounts(): ManageAccounts
-	{
-		return new ManageAccounts($this);
-	}
+    public function shipmentTracking(): ShipmentTracking
+    {
+        return new ShipmentTracking($this);
+    }
 
+    public function subscriptions(): Subscriptions
+    {
+        return new Subscriptions($this);
+    }
 
-	public function orders(): Orders
-	{
-		return new Orders($this);
-	}
+    public function templates(): Templates
+    {
+        return new Templates($this);
+    }
 
+    public function transactionSearch(): TransactionSearch
+    {
+        return new TransactionSearch($this);
+    }
 
-	public function payments(): Payments
-	{
-		return new Payments($this);
-	}
-
-
-	public function payouts(): Payouts
-	{
-		return new Payouts($this);
-	}
-
-
-	public function plans(): Plans
-	{
-		return new Plans($this);
-	}
-
-
-	public function shipmentTracking(): ShipmentTracking
-	{
-		return new ShipmentTracking($this);
-	}
-
-
-	public function subscriptions(): Subscriptions
-	{
-		return new Subscriptions($this);
-	}
-
-
-	public function templates(): Templates
-	{
-		return new Templates($this);
-	}
-
-
-	public function transactionSearch(): TransactionSearch
-	{
-		return new TransactionSearch($this);
-	}
-
-
-	public function webhooks(): Webhooks
-	{
-		return new Webhooks($this);
-	}
+    public function webhooks(): Webhooks
+    {
+        return new Webhooks($this);
+    }
 }

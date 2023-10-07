@@ -2,7 +2,6 @@
 
 namespace App\Http\Integrations\Stripe\Requests\Sources;
 
-use DateTime;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -13,22 +12,17 @@ use Saloon\Traits\Body\HasJsonBody;
  */
 class UpdateSource extends Request implements HasBody
 {
-	use HasJsonBody;
+    use HasJsonBody;
 
-	protected Method $method = Method::POST;
+    protected Method $method = Method::POST;
 
+    public function resolveEndpoint(): string
+    {
+        return "/v1/sources/{$this->source}";
+    }
 
-	public function resolveEndpoint(): string
-	{
-		return "/v1/sources/{$this->source}";
-	}
-
-
-	/**
-	 * @param string $source
-	 */
-	public function __construct(
-		protected string $source,
-	) {
-	}
+    public function __construct(
+        protected string $source,
+    ) {
+    }
 }

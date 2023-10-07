@@ -2,7 +2,6 @@
 
 namespace App\Http\Integrations\Stripe\Requests\TestClocks;
 
-use DateTime;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -13,18 +12,16 @@ use Saloon\Traits\Body\HasJsonBody;
  */
 class CreateTestClock extends Request implements HasBody
 {
-	use HasJsonBody;
+    use HasJsonBody;
 
-	protected Method $method = Method::POST;
+    protected Method $method = Method::POST;
 
+    public function resolveEndpoint(): string
+    {
+        return '/v1/test_helpers/test_clocks';
+    }
 
-	public function resolveEndpoint(): string
-	{
-		return "/v1/test_helpers/test_clocks";
-	}
-
-
-	public function __construct()
-	{
-	}
+    public function __construct()
+    {
+    }
 }

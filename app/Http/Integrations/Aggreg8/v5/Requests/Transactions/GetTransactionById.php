@@ -2,7 +2,6 @@
 
 namespace App\Http\Integrations\Aggreg8\v5\Requests\Transactions;
 
-use DateTime;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
@@ -11,20 +10,15 @@ use Saloon\Http\Request;
  */
 class GetTransactionById extends Request
 {
-	protected Method $method = Method::GET;
+    protected Method $method = Method::GET;
 
+    public function resolveEndpoint(): string
+    {
+        return "/transactions/{$this->transactionId}";
+    }
 
-	public function resolveEndpoint(): string
-	{
-		return "/transactions/{$this->transactionId}";
-	}
-
-
-	/**
-	 * @param string $transactionId
-	 */
-	public function __construct(
-		protected string $transactionId,
-	) {
-	}
+    public function __construct(
+        protected string $transactionId,
+    ) {
+    }
 }

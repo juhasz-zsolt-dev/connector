@@ -2,7 +2,6 @@
 
 namespace App\Http\Integrations\Stripe\Requests\CustomerBalanceTransactions;
 
-use DateTime;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -13,22 +12,17 @@ use Saloon\Traits\Body\HasJsonBody;
  */
 class CreateCustomerBalanceTransaction extends Request implements HasBody
 {
-	use HasJsonBody;
+    use HasJsonBody;
 
-	protected Method $method = Method::POST;
+    protected Method $method = Method::POST;
 
+    public function resolveEndpoint(): string
+    {
+        return "/v1/customers/{$this->customer}/balance_transactions";
+    }
 
-	public function resolveEndpoint(): string
-	{
-		return "/v1/customers/{$this->customer}/balance_transactions";
-	}
-
-
-	/**
-	 * @param string $customer
-	 */
-	public function __construct(
-		protected string $customer,
-	) {
-	}
+    public function __construct(
+        protected string $customer,
+    ) {
+    }
 }

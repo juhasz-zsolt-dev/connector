@@ -2,7 +2,6 @@
 
 namespace App\Http\Integrations\PayPal\Requests\Subscriptions;
 
-use DateTime;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -13,42 +12,32 @@ use Saloon\Traits\Body\HasJsonBody;
  */
 class CreateSubscription extends Request implements HasBody
 {
-	use HasJsonBody;
+    use HasJsonBody;
 
-	protected Method $method = Method::POST;
+    protected Method $method = Method::POST;
 
+    public function resolveEndpoint(): string
+    {
+        return '/v1/billing/subscriptions';
+    }
 
-	public function resolveEndpoint(): string
-	{
-		return "/v1/billing/subscriptions";
-	}
+    public function __construct(
+        protected mixed $planId = null,
+        protected mixed $startTime = null,
+        protected mixed $shippingAmount = null,
+        protected mixed $subscriber = null,
+        protected mixed $applicationContext = null,
+    ) {
+    }
 
-
-	/**
-	 * @param null|mixed $planId
-	 * @param null|mixed $startTime
-	 * @param null|mixed $shippingAmount
-	 * @param null|mixed $subscriber
-	 * @param null|mixed $applicationContext
-	 */
-	public function __construct(
-		protected mixed $planId = null,
-		protected mixed $startTime = null,
-		protected mixed $shippingAmount = null,
-		protected mixed $subscriber = null,
-		protected mixed $applicationContext = null,
-	) {
-	}
-
-
-	public function defaultBody(): array
-	{
-		return array_filter([
-			'plan_id' => $this->planId,
-			'start_time' => $this->startTime,
-			'shipping_amount' => $this->shippingAmount,
-			'subscriber' => $this->subscriber,
-			'application_context' => $this->applicationContext,
-		]);
-	}
+    public function defaultBody(): array
+    {
+        return array_filter([
+            'plan_id' => $this->planId,
+            'start_time' => $this->startTime,
+            'shipping_amount' => $this->shippingAmount,
+            'subscriber' => $this->subscriber,
+            'application_context' => $this->applicationContext,
+        ]);
+    }
 }
