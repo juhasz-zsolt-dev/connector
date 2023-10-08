@@ -13,7 +13,6 @@ use App\Persistence\Enums\Billingo\Language;
 use App\Persistence\Enums\Billingo\PaymentMethod;
 use App\Persistence\Services\ApiKeyResolver;
 use Exception;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use ReflectionException;
 use Saloon\Contracts\Connector;
@@ -38,60 +37,17 @@ class DocumentController extends Controller
     /**
      * Creates a document.
      *
-     * @param  Request  $request The request object containing the data for creating the document.
-     * @return JsonResponse The JSON response containing the result of the document creation.
+     * @param Request $request The request object containing the data for creating the document.
+     * @return Response The JSON response containing the result of the document creation.
      */
-    public function createDocument(Request $request): JsonResponse
+    public function createDocument(Request $request): Response
     {
-        try {
-            $makeDocumentRequest = new CreateDocument();
-            $makeDocumentRequest->body()->merge([
-                //                "vendor_id" => $request->get("vendor_id"), // Szállító
-                'partner_id' => $request->get(key: 'partner_id'),
-                'block_id' => $request->get(key: 'block_id', default: 0),
-                'bank_account_id' => $request->get(key: 'bank_account_id', default: 0),
-                'type' => 'advance',
-                'fulfillment_date' => $request->get(key: 'fulfillment_date', default: now()->format(format: 'Y-m-d')),
-                'due_date' => $request->get(key: 'due_date', default: now()->addDays(8)->format(format: 'Y-m-d')),
-                'payment_method' => PaymentMethod::BANKCARD->value,
-                'language' => Language::HU->value,
-                'currency' => Currency::HUF->value,
-                'conversion_rate' => 1,
-                'electronic' => false,
-                'paid' => false,
-                'items' => $request->get(key: 'items'),
-                'comment' => 'string',
-                'settings' => [
-                    'mediated_service' => false,
-                    'without_financial_fulfillment' => false,
-                    'online_payment' => '',
-                    'round' => 'five',
-                    'no_send_onlineszamla_by_user' => true,
-                    'order_number' => 'string',
-                    'place_id' => 0,
-                    'instant_payment' => true,
-                    'selected_type' => 'advance',
-                ],
-                //                "advance_invoice" => [ // Előlegszámla
-                //                    0
-                //                ],
-                'discount' => [
-                    'type' => 'percent',
-                    'value' => 0,
-                ],
-                'instant_payment' => true,
-            ]);
-            $createResponse = $this->connector->send(request: $makeDocumentRequest);
-
-            return response()->json(data: $createResponse->json(), status: $createResponse->status());
-        } catch (Exception $exception) {
-            dd($exception);
-        }
+        return $this->resource->createDocument($request);
     }
 
-    public function createReceipt(): Response
+    public function createReceipt(Request $request): Response
     {
-        return $this->resource->createReceipt();
+        return $this->resource->createReceipt($request);
     }
 
     public function createReceiptFromDraft(Request $request): Response
