@@ -3,6 +3,7 @@
 use App\Http\Controllers\Integrations\Billingo\BankAccountController;
 use App\Http\Controllers\Integrations\Billingo\CurrencyController;
 use App\Http\Controllers\Integrations\Billingo\DocumentController;
+use App\Http\Controllers\Integrations\Billingo\DocumentExportController;
 use App\Http\Controllers\Integrations\Billingo\OrganizationController;
 use App\Http\Controllers\Integrations\Billingo\PartnerController;
 use App\Http\Controllers\Integrations\Billingo\ProductController;
@@ -69,6 +70,12 @@ Route::group(['prefix' => 'utils'], function () {
     Route::get('/check-tax-number/{tax_number}', [UtilController::class, 'checkTaxNumber'])->name('util.check-tax-number');
     Route::get('/convert-legacy-id/{id}', [UtilController::class, 'convertLegacyId'])->name('util.convert-legacy-id');
     Route::get('/time', [UtilController::class, 'getServerTime'])->name('util.get-server-time');
+});
+
+Route::group(['prefix' => 'document-export'], function () {
+    Route::post('create', [DocumentExportController::class, 'create'])->name('document-export.create');
+    Route::get('download', [DocumentExportController::class, 'download'])->name('document-export.download');
+    Route::get('poll', [DocumentExportController::class, 'poll'])->name('document-export.poll');
 });
 
 Route::get('/currencies', [CurrencyController::class, 'getConversionRate'])->name('currency.get-conversion-rate');
