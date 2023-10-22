@@ -14,5 +14,5 @@
         - name: Compile CSS and Javascript
           run: |
             npm i
-            npm run prod
+            npm run build
 
