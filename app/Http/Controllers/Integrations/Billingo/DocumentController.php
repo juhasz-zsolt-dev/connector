@@ -4,13 +4,9 @@ namespace App\Http\Controllers\Integrations\Billingo;
 
 use App\Http\Controllers\Controller;
 use App\Http\Integrations\Billingo\Billingo;
-use App\Http\Integrations\Billingo\Requests\Document\CreateDocument;
 use App\Http\Integrations\Billingo\Requests\Document\DownloadDocument;
 use App\Http\Integrations\Billingo\Requests\Document\GetDocument;
 use App\Http\Integrations\Billingo\Resource\Document;
-use App\Persistence\Enums\Billingo\Currency;
-use App\Persistence\Enums\Billingo\Language;
-use App\Persistence\Enums\Billingo\PaymentMethod;
 use App\Persistence\Services\ApiKeyResolver;
 use Exception;
 use Illuminate\Http\Request;
@@ -37,7 +33,7 @@ class DocumentController extends Controller
     /**
      * Creates a document.
      *
-     * @param Request $request The request object containing the data for creating the document.
+     * @param  Request  $request The request object containing the data for creating the document.
      * @return Response The JSON response containing the result of the document creation.
      */
     public function createDocument(Request $request): Response

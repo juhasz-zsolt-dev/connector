@@ -7,7 +7,7 @@ use App\Http\Integrations\Billingo\Billingo;
 use App\Http\Integrations\Billingo\Resource\Product;
 use App\Persistence\Services\ApiKeyResolver;
 use Illuminate\Http\Request;
-use Saloon\Contracts\Connector;
+use Saloon\Http\Connector;
 use Saloon\Http\Response;
 
 class ProductController extends Controller

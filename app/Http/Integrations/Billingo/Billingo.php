@@ -13,6 +13,7 @@ use App\Http\Integrations\Billingo\Resource\Product;
 use App\Http\Integrations\Billingo\Resource\Spending;
 use App\Http\Integrations\Billingo\Resource\Util;
 use Saloon\Http\Connector;
+use Saloon\Traits\Plugins\AcceptsJson;
 
 /**
  * Billingo API v3
@@ -21,6 +22,8 @@ use Saloon\Http\Connector;
  */
 class Billingo extends Connector
 {
+    use AcceptsJson;
+
     public function __construct(private readonly string $apiKey)
     {
     }

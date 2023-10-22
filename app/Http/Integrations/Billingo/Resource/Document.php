@@ -36,40 +36,40 @@ use Saloon\Http\Response;
 class Document extends Resource
 {
     /**
-     * @param int|null $blockId Filter documents by the identifier of your DocumentBlock.
-     * @param int|null $partnerId Filter documents by the identifier of your Partner.
-     * @param string|null $paymentMethod Filter documents by PaymentMethod value.
-     * @param string|null $paymentStatus Filter documents by PaymentStatus value.
-     * @param string|null $startDate Filter documents by their invoice date.
-     * @param string|null $endDate Filter documents by their invoice date.
-     * @param int|null $startNumber Starting number of the document, should not contain year or any other formatting. Required if `start_year` given
-     * @param int|null $endNumber Ending number of the document, should not contain year or any other formatting. Required if `end_year` given
-     * @param int|null $startYear Year for `start_number` parameter. Required if `start_number` given.
-     * @param int|null $endYear Year for `end_number` parameter. Required if `end_number` given.
-     * @param string|null $type Filter documents by type
-     * @param string|null $paidStartDate Filter documents by their payment date.
-     * @param string|null $paidEndDate Filter documents by their payment date.
-     * @param string|null $fulfillmentStartDate Filter documents by their fulfillment date.
-     * @param string|null $fulfillmentEndDate Filter documents by their fulfillment date.
-     * @param string|null $lastModifiedDate Filter documents by their last modified date.
+     * @param  int|null  $blockId Filter documents by the identifier of your DocumentBlock.
+     * @param  int|null  $partnerId Filter documents by the identifier of your Partner.
+     * @param  string|null  $paymentMethod Filter documents by PaymentMethod value.
+     * @param  string|null  $paymentStatus Filter documents by PaymentStatus value.
+     * @param  string|null  $startDate Filter documents by their invoice date.
+     * @param  string|null  $endDate Filter documents by their invoice date.
+     * @param  int|null  $startNumber Starting number of the document, should not contain year or any other formatting. Required if `start_year` given
+     * @param  int|null  $endNumber Ending number of the document, should not contain year or any other formatting. Required if `end_year` given
+     * @param  int|null  $startYear Year for `start_number` parameter. Required if `start_number` given.
+     * @param  int|null  $endYear Year for `end_number` parameter. Required if `end_number` given.
+     * @param  string|null  $type Filter documents by type
+     * @param  string|null  $paidStartDate Filter documents by their payment date.
+     * @param  string|null  $paidEndDate Filter documents by their payment date.
+     * @param  string|null  $fulfillmentStartDate Filter documents by their fulfillment date.
+     * @param  string|null  $fulfillmentEndDate Filter documents by their fulfillment date.
+     * @param  string|null  $lastModifiedDate Filter documents by their last modified date.
      *
      * @throws InvalidResponseClassException
      * @throws PendingRequestException
      * @throws ReflectionException
      */
     public function listDocument(
-        ?int    $page,
-        ?int    $perPage,
-        ?int    $blockId,
-        ?int    $partnerId,
+        ?int $page,
+        ?int $perPage,
+        ?int $blockId,
+        ?int $partnerId,
         ?string $paymentMethod,
         ?string $paymentStatus,
         ?string $startDate,
         ?string $endDate,
-        ?int    $startNumber,
-        ?int    $endNumber,
-        ?int    $startYear,
-        ?int    $endYear,
+        ?int $startNumber,
+        ?int $endNumber,
+        ?int $startYear,
+        ?int $endYear,
         ?string $type,
         ?string $documentQuery,
         ?string $paidStartDate,
@@ -77,8 +77,7 @@ class Document extends Resource
         ?string $fulfillmentStartDate,
         ?string $fulfillmentEndDate,
         ?string $lastModifiedDate,
-    ): Response
-    {
+    ): Response {
         return $this->connector->send(request: new ListDocument(
             $page,
             perPage: $perPage,
@@ -106,7 +105,7 @@ class Document extends Resource
     {
         $createDocumentRequest = new CreateDocument();
         $jsonBody = [
-            "vendor_id" => $request->get("vendor_id"), // Szállító
+            'vendor_id' => $request->get('vendor_id'), // Szállító
             'partner_id' => $request->get(key: 'partner_id'),
             'block_id' => $request->get(key: 'block_id', default: 0),
             'bank_account_id' => $request->get(key: 'bank_account_id', default: 0),
@@ -132,7 +131,7 @@ class Document extends Resource
                 'instant_payment' => true,
                 'selected_type' => 'advance',
             ],
-            "advance_invoice" => [],// Előlegszámla
+            'advance_invoice' => [], // Előlegszámla
             'discount' => [
                 'type' => 'percent',
                 'value' => 0,
@@ -141,10 +140,11 @@ class Document extends Resource
         ];
 
         $filteredArray = array_filter($jsonBody, function ($value) {
-            return !is_null($value) && $value !== '' && $value !== [];
+            return ! is_null($value) && $value !== '' && $value !== [];
         });
 
         $createDocumentRequest->body()->merge($filteredArray);
+
         return $this->connector->send(request: $createDocumentRequest);
     }
 
@@ -152,22 +152,23 @@ class Document extends Resource
     {
         $createRequest = new CreateReceipt();
         $jsonBody = [
-            "vendor_id" => $request->get("vendor_id"), // Szállító
+            'vendor_id' => $request->get('vendor_id'), // Szállító
             'partner_id' => $request->get(key: 'partner_id'),
-            "name" => $request->get('name'),
-            "emails" => $request->get('emails', []),
+            'name' => $request->get('name'),
+            'emails' => $request->get('emails', []),
             'block_id' => $request->get(key: 'block_id', default: 0),
             'type' => $request->get('type', 'advance'),
             'payment_method' => $request->get('payment_method', PaymentMethod::BANKCARD->value),
             'currency' => $request->get('currency', Currency::HUF->value),
-            "conversion_rate" => $request->get('conversation_rate', 1),
-            "electronic" => true,
-            "items" => $request->get('items', [])
+            'conversion_rate' => $request->get('conversation_rate', 1),
+            'electronic' => true,
+            'items' => $request->get('items', []),
         ];
         $filteredArray = array_filter($jsonBody, function ($value) {
-            return !is_null($value) && $value !== '' && $value !== [];
+            return ! is_null($value) && $value !== '' && $value !== [];
         });
         $createRequest->body()->merge($filteredArray);
+
         return $this->connector->send(request: $createRequest);
     }
 
@@ -247,7 +248,7 @@ class Document extends Resource
     }
 
     /**
-     * @param float|int $size In which size the POS PDF should be rendered.
+     * @param  float|int  $size In which size the POS PDF should be rendered.
      */
     public function posPrint(int $id, float|int $size): Response
     {
