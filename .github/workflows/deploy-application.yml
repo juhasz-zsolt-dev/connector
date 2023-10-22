@@ -13,6 +13,6 @@
 
         - name: Compile CSS and Javascript
           run: |
-            npm install
+            npm i
             npm run prod
 
